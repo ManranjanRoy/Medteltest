@@ -9,7 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CountryService {
+public class RetrofitService {
     private Retrofit retrofit = null;
 
 
