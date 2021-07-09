@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.dca.medteltest.model.UserModel;
 import com.dca.medteltest.presenter.UserPresenter;
-import com.dca.medteltest.service.CountryService;
+import com.dca.medteltest.service.RetrofitService;
 import com.dca.medteltest.view.UserView;
 
 
@@ -23,33 +23,32 @@ public class UserPresenterImp implements UserPresenter {
 
     public UserPresenterImp(UserView userView, Context applicationContext) {
         this.userView = userView;
-        this.context=applicationContext;
+        this.context = applicationContext;
     }
 
     @Override
     public void getdata() {
-            userView.Showprogess();
-            CountryService countryService = new CountryService();
-            countryService.getAPI().userlist().enqueue(new Callback<List<UserModel>>() {
-                @Override
-                public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
-                    if (response.isSuccessful()){
-                        userView.dismissproggress();
-                        userView.getuserlist(response.body());
-
-                    }
-                    else{
-                        Toast.makeText(context, "Data not Found", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<UserModel>> call, Throwable t) {
+        userView.Showprogess();
+        RetrofitService retrofitService = new RetrofitService();
+        retrofitService.getAPI().userlist().enqueue(new Callback<List<UserModel>>() {
+            @Override
+            public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
+                if (response.isSuccessful()) {
                     userView.dismissproggress();
-                    Toast.makeText(context, "Network Problem", Toast.LENGTH_SHORT).show();
+                    userView.getuserlist(response.body());
+
+                } else {
+                    Toast.makeText(context, "Data not Found", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserModel>> call, Throwable t) {
+                userView.dismissproggress();
+                Toast.makeText(context, "Network Problem", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
 }
