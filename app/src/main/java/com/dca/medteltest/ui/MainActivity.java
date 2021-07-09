@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements UserView{
     UserPresenter userPresenter;
-    RecyclerView addressrecyclerview;
+    RecyclerView recyclerview;
     ProgressBar progressBar;
     UserListAdaptor useradaptor;
     List<UserModel> userModelList=new ArrayList<>();
@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity implements UserView{
         progressBar = findViewById(R.id.spin_kit);
         Sprite doubleBounce = new FoldingCube();
         progressBar.setIndeterminateDrawable(doubleBounce);
-        addressrecyclerview = findViewById(R.id.recyclerview);
-        addressrecyclerview.setHasFixedSize(true);
-        addressrecyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerview = findViewById(R.id.recyclerview);
+        recyclerview.setHasFixedSize(true);
+        recyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         userPresenter.getdata();
 
     }
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements UserView{
     public void getuserlist(List<UserModel> userModelList) {
         this.userModelList=userModelList;
         useradaptor = new UserListAdaptor(getApplicationContext(), userModelList);
-        addressrecyclerview.setAdapter(useradaptor);
+        recyclerview.setAdapter(useradaptor);
 
     }
 
